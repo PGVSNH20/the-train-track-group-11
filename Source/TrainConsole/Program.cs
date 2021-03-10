@@ -1,4 +1,5 @@
 ﻿using System;
+using TrainEngine;
 
 namespace TrainConsole
 {
@@ -6,6 +7,8 @@ namespace TrainConsole
     {
         static void Main(string[] args)
         {
+            DateTime time = new DateTime();
+            ITravelPlan newTravelPlan = new TrainScheduler(new Train()).StartTrainAt(new TimeTableEntry("Öresund", time)).GeneratePlan();
             Console.WriteLine("Train track!");
             // Step 1:
             // Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)

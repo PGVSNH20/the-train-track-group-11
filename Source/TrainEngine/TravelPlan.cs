@@ -9,6 +9,11 @@ namespace TrainEngine
         public List<TimeTableEntry> TimeTable { get; }
 
         public Train Train { get; }
+        public TravelPlan(List<TimeTableEntry> list, Train newTrain)
+        {
+            Train = newTrain;
+            TimeTable = list;
+        }
 
         public void Load(string path)
         {
