@@ -12,6 +12,7 @@ namespace TrainEngine
 
         public TrainScheduler(Train newTrain)
         {
+            timeTableEntries = new List<TimeTableEntry>();
             train = newTrain;
         }
 

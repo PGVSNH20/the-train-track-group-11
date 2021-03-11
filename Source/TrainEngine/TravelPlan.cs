@@ -24,5 +24,15 @@ namespace TrainEngine
         {
             throw new NotImplementedException();
         }
+
+
+        /*
+            "-", "\", "/", "|" = track
+            "*" = start position for loading/building.
+            "[n]" = station
+            "<", ">" = förgreningar
+            "=" = bilvägskorsning
+
+        */
     }
 }

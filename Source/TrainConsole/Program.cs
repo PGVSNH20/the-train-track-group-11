@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using TrainEngine;
+using TrainEngine.Class_Objects;
+using TrainEngine.FileReaders;
 
 namespace TrainConsole
 {
@@ -8,7 +11,9 @@ namespace TrainConsole
         static void Main(string[] args)
         {
             DateTime time = new DateTime();
-            ITravelPlan newTravelPlan = new TrainScheduler(new Train()).StartTrainAt(new TimeTableEntry("Öresund", time)).GeneratePlan();
+            ITravelPlan newTravelPlan = new TrainScheduler(new Train())
+                                                .StartTrainAt(new TimeTableEntry("Öresund", time))
+                                                .GeneratePlan();
             Console.WriteLine("Train track!");
             // Step 1:
             // Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)
@@ -16,7 +21,11 @@ namespace TrainConsole
 
             // Step 2:
             // Make the trains run in treads
-            Console.WriteLine("Hello World");
+            List<Passenger> pr = new PassengerReader("").GetPassengers();
+            foreach (Passenger p in pr)
+            {
+                Console.WriteLine(p.Name);
+            }
         }
     }
 }
