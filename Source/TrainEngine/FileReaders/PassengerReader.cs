@@ -8,7 +8,6 @@ namespace TrainEngine.FileReaders
 {
     public class PassengerReader
     {
-        String[] dataArray;
         List<Passenger> listOfPassengers { get; }
 
         public PassengerReader(string url)
@@ -16,7 +15,8 @@ namespace TrainEngine.FileReaders
             string inputData = new StreamReader(
                             File.Open("C:\\plushogskolan\\Dataåtkomster i .NET\\The Train Track\\Source\\TrainEngine\\Data\\passengers.txt", FileMode.Open)
                                             ).ReadToEnd();
-            dataArray = inputData.Split("\n");
+
+            string[] dataArray = inputData.Split("\n");
             listOfPassengers = new List<Passenger>();
             foreach(string passenger in dataArray)
             {

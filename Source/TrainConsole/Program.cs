@@ -11,7 +11,7 @@ namespace TrainConsole
         static void Main(string[] args)
         {
             DateTime time = new DateTime();
-            ITravelPlan newTravelPlan = new TrainScheduler(new Train())
+            ITravelPlan newTravelPlan = new TrainScheduler(new Train(1, "Jiminy", true))
                                                 .StartTrainAt(new TimeTableEntry("Öresund", time))
                                                 .GeneratePlan();
             Console.WriteLine("Train track!");
@@ -25,6 +25,13 @@ namespace TrainConsole
             foreach (Passenger p in pr)
             {
                 Console.WriteLine(p.Name);
+            }
+
+            List<Train> t = new TrainReader("").TrainList;
+
+            foreach(Train x in t)
+            {
+                x.PrintTrain();
             }
         }
     }
