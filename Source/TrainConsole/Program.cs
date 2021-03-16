@@ -21,7 +21,8 @@ namespace TrainConsole
 
             // Step 2:
             // Make the trains run in treads
-            List<Passenger> pr = new PassengerReader("").GetPassengers();
+            PassengerReader passengerReader = new PassengerReader();
+            var pr = passengerReader.Load("C:\\plushogskolan\\Dataåtkomster i .NET\\The Train Track\\Source\\TrainEngine\\Data\\passengers.txt");
             foreach (Passenger p in pr)
             {
                 Console.WriteLine(p.Name);

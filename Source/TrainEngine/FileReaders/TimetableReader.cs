@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TrainEngine.Class_Objects;
+using System.Text;
 using TrainEngine.Interfaces;
 
 namespace TrainEngine.FileReaders
 {
-    public class PassengerReader : IFileReader
+    class TimetableReader : IFileReader
     {
-        List<object> listOfPassengers { get; set; }
-
+        
         public List<object> Load(string url)
         {
+            
             string inputData = new StreamReader(
                             File.Open(url, FileMode.Open)
                                             ).ReadToEnd();
 
             string[] dataArray = inputData.Split("\n");
-            listOfPassengers = new List<object>();
-            foreach(string passenger in dataArray)
+            var ListOfTime = new List<object>();
+            foreach (string entry in dataArray)
             {
-                string[] passengerData = passenger.Split(";");
-                listOfPassengers.Add(new Passenger(Convert.ToInt32(passengerData[0]), passengerData[1]));
+                string[] StationData = entry.Split(",");
+                ListOfTime.Add(new TimeTableEntry(Convert.ToInt32(entry[0]), Convert.ToInt32(entry[1]), Convert.ToDateTime(entry[2]), Convert.ToDateTime(entry[3])));
             }
-            return listOfPassengers;
+            return ListOfTime;
         }
     }
 }
