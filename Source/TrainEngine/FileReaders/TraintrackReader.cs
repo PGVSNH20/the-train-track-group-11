@@ -123,12 +123,16 @@ namespace TrainEngine.FileReaders
             {
                 positionChecked[currentPosition[0], currentPosition[1]] = true;
                 int howToMove = CheckTrackPiece(dataArray[currentPosition[0]][currentPosition[1]]);
-                if (howToMove != 0)
+                if (howToMove == 0)
+                {
+                    NextStepChecker(dataArray, howToMove, currentPosition);
+                }
+                else
                 {
                     TrackSegment currentSegment = new TrackSegment(SegmentInterpreter(dataArray[currentPosition[0]][currentPosition[1]]));
                     TrackSegments.Add(currentSegment);
+                    NextStepChecker(dataArray, howToMove, currentPosition);
                 }
-                NextStepChecker(dataArray, howToMove, currentPosition);
             }
         }
 
@@ -219,7 +223,11 @@ namespace TrainEngine.FileReaders
                 case '=': return "LevelCrossingTrack";
                 case '<': return "BranchSplit";
                 case '>': return "BrachJoin";
-                default: return $"Station {c}";
+                case '1': return "Station 1";
+                case '2': return "Station 2";
+                case '3': return "Station 3";
+                case '4': return "Station 4";
+                default: return $"Invalid Symbol";
             }
         }
 
