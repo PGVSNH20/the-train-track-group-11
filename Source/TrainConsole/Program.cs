@@ -5,6 +5,7 @@ using TrainEngine;
 using TrainEngine.Class_Objects;
 using TrainEngine.FileReaders;
 using TrainEngine.FileWriters;
+using TrainEngine.Simulation;
 
 namespace TrainConsole
 {
@@ -12,9 +13,14 @@ namespace TrainConsole
     {
         static void Main(string[] args)
         {
-            
-            PassengerReader pr = new PassengerReader();
-            List<Object> passengers = pr.Load(@"C:\Users\Robert\Source\Repos\the-train-track-group-11\Data\passengers.txt");
+
+            TrainSimulator mySim = new TrainSimulator()
+                                        .GetTrain()
+                                        .GetTrack()
+                                        .RunSimulation();
+            /*
+            //PassengerReader pr = new PassengerReader();
+            //List<Object> passengers = pr.Load(@"C:\Users\Robert\Source\Repos\the-train-track-group-11\Data\passengers.txt");
 
             PassengerWriter pw = new PassengerWriter();
             pw.Save("D:\\files.txt",passengers);
@@ -35,19 +41,26 @@ namespace TrainConsole
             //    Console.WriteLine(x.Name);
             //}
 
-            //foreach(TimeTableEntry x in timetable)
-            //{
-            //    Console.WriteLine(x.TrainId) ;
-            //}
+            foreach(TimeTableEntry x in timetable)
+            {
+                Console.WriteLine(x.TrainId);
+                Console.WriteLine(x.StationId);
+                Console.WriteLine(x.Arrival);
+                Console.WriteLine(x.Departure);
+                Console.WriteLine();
+            }
 
-            //List<object> stationList = new StationReader().Load(@$"{Directory.GetCurrentDirectory()}\Data\stations.txt");
-            //stationList.ForEach(s => Console.WriteLine(Station.StationFromObject(s).Name));
-            //List<object> listOfTrackSegments = new TraintrackReader2().Load(@$"{Directory.GetCurrentDirectory()}\Data\traintrack2.txt");
+            List<object> stationList = new StationReader().Load(@$"{Directory.GetCurrentDirectory()}\Data\stations.txt");
+            stationList.ForEach(s => Console.WriteLine(Station.StationFromObject(s).Name));
+            List<object> listOfTrackSegments = new TraintrackReader2().Load(@$"{Directory.GetCurrentDirectory()}\Data\traintrack2.txt");
+            TraintrackWriter ttW = new TraintrackWriter();
+            ttW.Save(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\traintrack2-2.txt", listOfTrackSegments);
 
-            //foreach (TrackSegment track in listOfTrackSegments)
-            //{
-            //    Console.WriteLine(track.TrackType);
-            //}
+            foreach (TrackSegment track in listOfTrackSegments)
+            {
+                Console.WriteLine(track.TrackType);
+            }
+            */
         }
     }
 }
