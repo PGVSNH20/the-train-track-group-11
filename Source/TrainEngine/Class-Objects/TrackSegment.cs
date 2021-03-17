@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TrainEngine.Class_Objects
 {
-    class TrackSegment
+    public class TrackSegment
     {
-        string TrackType { get; set; }
+        public string TrackType { get; }
         public TrackSegment(string type)
         {
             TrackType = type;

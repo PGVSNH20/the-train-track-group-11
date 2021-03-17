@@ -4,15 +4,33 @@ using System.Text;
 
 namespace TrainEngine.FileReaders
 {
-    class StationReader
+    public class StationReader
     {
         List<Station> StationList = new List<Station>();
-        /* kommenterar ut ofärding kod för tillfället
-        public StationReader(string url)
+        
+        public List<Station> Load(string url)
         {
-          string inputData = StreamReader("C:\\plushogskolan\\Dataåtkomster i .NET\\The Train Track\\Source\\TrainEngine\\Data\\passengers.txt", FileMode.Open);
-          string Statio
+            
+            String input = System.IO.File.ReadAllText(url);
+
+            String[] rows = input.Split(Environment.NewLine);
+            for (int x = 1; x < rows.Length; x++)
+            {
+                String[] col = rows[x].Split("|");
+                
+            
+                StationList.Add(new Station(Int32.Parse(col[0]),col[1], (col[2].ToLower() == "true") ? true : false));
+                //TrainList.Add(new Train(Int32.Parse(col[0]), col[1], Convert.ToBoolean(col[2]));
+
+            }
+
+
+            
+
+
+            return StationList;
         }
-        */
+
+           
     }
 }

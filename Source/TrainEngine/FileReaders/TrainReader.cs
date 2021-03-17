@@ -13,29 +13,26 @@ namespace TrainEngine.FileReaders
         public TrainReader(String url)
         {
 
-            String TrainInput = System.IO.File.ReadAllText("C:\\plushogskolan\\Dataåtkomster i.NET\\The Train Track\\Source\\TrainEngine\\Data\\trains.txt");
+            String TrainInput = System.IO.File.ReadAllText(url);
 
-            String[] TrainRows = TrainInput.Split("/n");
-
+            String[] TrainRows = TrainInput.Split(Environment.NewLine);
             for (int x = 1; x < TrainRows.Length; x++)
             {
-
                 String[] col = TrainRows[x].Split(",");
                 TrainList.Add(new Train(Int32.Parse(col[0]), col[1], (col[2].ToLower() == "true") ? true : false));
                 //TrainList.Add(new Train(Int32.Parse(col[0]), col[1], Convert.ToBoolean(col[2]));
 
             }
 
-
-
         }
 
-        public void PrintList()
+        public List<Train> PrintList()
         {
             foreach(var x in TrainList)
             {
                 Console.WriteLine(x.PrintTrain());
             }
+            return TrainList;
         }
 
 

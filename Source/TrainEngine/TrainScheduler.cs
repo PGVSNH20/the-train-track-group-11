@@ -18,6 +18,8 @@ namespace TrainEngine
 
 
         // TimeTableEntry har en överladdad konstruktor som skippar den boolean som säger ifall den ska starta eller stanna. Istället för att behöva hålla reda på om "true" betyder "stanna" eller "starta" så kan StartTrainAt() och StopTrainAt() ta emot TimeTableEntry-objekt utan den variabeln satt och hantera detta bakom kulisserna.
+        /*
+         * Utkommenterat för att slippa fixa koden här innan jag testar annat.
         public TrainScheduler StartTrainAt(TimeTableEntry newEntry)         
         {
             if (!alreadyAtStation)
@@ -44,7 +46,7 @@ namespace TrainEngine
             return this;
 
         }
-
+        */
         public ITravelPlan GeneratePlan()
         {
             return new TravelPlan(timeTableEntries, train);

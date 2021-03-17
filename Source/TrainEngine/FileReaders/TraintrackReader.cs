@@ -9,12 +9,12 @@ namespace TrainEngine.FileReaders
 {
     public class TraintrackReader : IFileReader
     {
-        List<TrackSegment> trackSegments = new List<TrackSegment>();
-        public List<object> listOfLists { get; set; }
+        List<TrackSegment> TrackSegments { get; set; }
+        public List<object> ListOfLists { get; set; }
         public bool[,] positionChecked;
         public List<object> Load(string url)
         {
-            listOfLists = new List<object>();
+            ListOfLists = new List<object>();
             string inputData = new StreamReader(
                             File.Open(url, FileMode.Open)
                                             ).ReadToEnd();
@@ -28,11 +28,10 @@ namespace TrainEngine.FileReaders
             GridWhitespaceAdder(dataArray, longestRow);
 
             int numberOfRows = dataArray.Length;
-            positionChecked = new bool[longestRow, numberOfRows];
-            for (int i = 0; i < positionChecked.Length; i++)
-            {
-                for(int j = 0; j < positionChecked.)
-            }
+
+            // Denna array kommer användas senare för att se till att spår inte dupliceras
+            positionChecked = new bool[numberOfRows, longestRow];
+            SetAllPositionsInPositionCheckerArrayToFalse(longestRow, numberOfRows);
 
             bool startingPointExists = false;
             int[] startingPointCoordinates = new int[2];
@@ -44,8 +43,11 @@ namespace TrainEngine.FileReaders
              * Efter det börjar man alltid läsa höger om stjärnan.
              */
 
-            trackSegments = new List<TrackSegment>();
-
+            if (startingPointExists)
+            {
+                TrackSegments = new List<TrackSegment>();
+                TrackInterpreter(dataArray, startingPointCoordinates);
+            }
 
             /* Dags att börja att gå igenom kartan systematiskt och skapa spår.
              * Ett spår ska bestå av flera segment.
@@ -58,7 +60,18 @@ namespace TrainEngine.FileReaders
             */
 
 
-            return listOfLists;
+            return ListOfLists;
+        }
+
+        private void SetAllPositionsInPositionCheckerArrayToFalse(int longestRow, int numberOfRows)
+        {
+            for (int i = 0; i < numberOfRows; i++)
+            {
+                for (int j = 0; j < longestRow; j++)
+                {
+                    positionChecked[i, j] = false;
+                }
+            }
         }
 
         private static int LongestRowFinder(string[] dataArray, int longestRow)
@@ -88,9 +101,9 @@ namespace TrainEngine.FileReaders
 
         private static bool StartPointFinder(string[] dataArray, int longestRow, int numberOfRows, bool startingPointExists, int[] startingPointCoordinates)
         {
-            for (int i = 0; i < longestRow; i++)
+            for (int i = 0; i < numberOfRows; i++)
             {
-                for (int j = 0; j < numberOfRows; j++)
+                for (int j = 0; j < longestRow; j++)
                 {
                     if (dataArray[i][j] == '*' && startingPointExists == false)
                     {
@@ -106,9 +119,91 @@ namespace TrainEngine.FileReaders
 
         public void TrackInterpreter(string[] dataArray, int[] currentPosition)
         {
-            List<TrackSegment> currentTrack = new List<TrackSegment>();
-            TrackSegment currentSegment = new TrackSegment(SegmentInterpreter(dataArray[currentPosition[0]][currentPosition[1]]));
-            int howToMove = CheckTrackPiece(dataArray[currentPosition[0]][currentPosition[1]]);
+            if (!positionChecked[currentPosition[0],currentPosition[1]]) // Note the NOT (!)
+            {
+                positionChecked[currentPosition[0], currentPosition[1]] = true;
+                int howToMove = CheckTrackPiece(dataArray[currentPosition[0]][currentPosition[1]]);
+                if (howToMove != 0)
+                {
+                    TrackSegment currentSegment = new TrackSegment(SegmentInterpreter(dataArray[currentPosition[0]][currentPosition[1]]));
+                    TrackSegments.Add(currentSegment);
+                }
+                NextStepChecker(dataArray, howToMove, currentPosition);
+            }
+        }
+
+        private void NextStepChecker(string[] dataArray, int howToMove, int[] currentPosition)
+        {
+            switch (howToMove)
+            {
+                case 0: // Need to check if symbol above or below whitespace is a backslash or frontslash
+                    HowToMoveCaseZeroChecker(dataArray, currentPosition);
+                    break;
+                case 1:     // Move one to the right
+                    int[] nextStep = { currentPosition[0], currentPosition[1] + 1 };
+                    TrackInterpreter(dataArray, nextStep);
+                    break;
+                case 2:     // Split to up and right, down and right
+                    int[] nextStep1 = { currentPosition[0] - 1, currentPosition[1] + 1 };
+                    int[] nextStep2 = { currentPosition[0] + 1, currentPosition[1] + 1 };
+                    ListOfLists.Add(TrackSegments);
+                    TrackSegments = new List<TrackSegment>();
+                    TrackInterpreter(dataArray, nextStep1);
+                    TrackInterpreter(dataArray, nextStep2);
+                    break;
+                case 3:     // Move one up to the right
+                    int[] nextStep3 = { currentPosition[0] - 1, currentPosition[1] + 1 };
+                    TrackInterpreter(dataArray, nextStep3);
+                    break;
+                case 4:     // Move one down to the right
+                    int[] nextStep4 = { currentPosition[0] + 1, currentPosition[1] + 1 };
+                    TrackInterpreter(dataArray, nextStep4);
+                    break;
+                //case 5:
+                //    TrackInterpreter(); ????
+                default: throw new Exception("Invalid value in NextStepChecker()");
+            }
+        }
+
+        private void HowToMoveCaseZeroChecker(string[] dataArray, int[] currentPosition)
+        {
+            int[] nextStep = new int[2];
+            bool isThisTheEndOfTheCurrentTrack = false;
+            switch (currentPosition[0])
+            {
+                case 0:
+                    if (dataArray[currentPosition[0]+1].ToCharArray()[currentPosition[1]] == '\\')
+                    {
+                        nextStep[0] = currentPosition[0] + 1;
+                        nextStep[1] = currentPosition[1];
+                        TrackInterpreter(dataArray, nextStep);
+                        break;
+                    }
+                    isThisTheEndOfTheCurrentTrack = true;
+                    break;
+                default:
+                    if (dataArray[currentPosition[0] + 1].ToCharArray()[currentPosition[1]] == '\\')
+                    {
+                        nextStep[0] = currentPosition[0] + 1;
+                        nextStep[1] = currentPosition[1];
+                        TrackInterpreter(dataArray, nextStep);
+                        break;
+                    }
+                    if (dataArray[currentPosition[0] - 1].ToCharArray()[currentPosition[1]] == '/')
+                    {
+                        nextStep[0] = currentPosition[0] - 1;
+                        nextStep[1] = currentPosition[1];
+                        TrackInterpreter(dataArray, nextStep);
+                        break;
+                    }
+                    isThisTheEndOfTheCurrentTrack = true;
+                    break;
+            }
+            if (isThisTheEndOfTheCurrentTrack)
+            {
+                ListOfLists.Add(TrackSegments);
+                TrackSegments = new List<TrackSegment>();
+            }
         }
 
         private string SegmentInterpreter(char c)
@@ -132,10 +227,11 @@ namespace TrainEngine.FileReaders
         {
             switch (c)
             {
-                case '<':
-                    return 2;
-                case ' ':
-                    return 0;
+                case '<': return 2;
+                case ' ': return 0;
+                case '/': return 3;
+                case '\\': return 4;
+                case '>': return 5;
                 default:
                     return 1;
             }

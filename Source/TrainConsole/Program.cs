@@ -10,10 +10,7 @@ namespace TrainConsole
     {
         static void Main(string[] args)
         {
-            DateTime time = new DateTime();
-            ITravelPlan newTravelPlan = new TrainScheduler(new Train(1, "Jiminy", true))
-                                                .StartTrainAt(new TimeTableEntry("Öresund", time))
-                                                .GeneratePlan();
+            /*
             Console.WriteLine("Train track!");
             // Step 1:
             // Parse the traintrack (Data/traintrack.txt) using ORM (see suggested code)
@@ -22,18 +19,33 @@ namespace TrainConsole
             // Step 2:
             // Make the trains run in treads
             PassengerReader passengerReader = new PassengerReader();
-            var pr = passengerReader.Load("C:\\plushogskolan\\Dataåtkomster i .NET\\The Train Track\\Source\\TrainEngine\\Data\\passengers.txt");
+            var pr = passengerReader.Load(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\passengers.txt");
             foreach (Passenger p in pr)
             {
                 Console.WriteLine(p.Name);
             }
 
-            List<Train> t = new TrainReader("").TrainList;
+            List<Train> t = new TrainReader(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\trains.txt")
+                                            .PrintList();
 
-            foreach(Train x in t)
+            List<Station> stationList = new StationReader().Load(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\stations.txt");
+            stationList.ForEach(s => Console.WriteLine(s.Name));
+            */ 
+            List<object> listOfTrackLists = new TraintrackReader().Load(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\traintrack3.txt");
+
+            foreach (List<TrackSegment> tl in listOfTrackLists)
             {
-                x.PrintTrain();
+                foreach (TrackSegment track in tl)
+                {
+                    Console.WriteLine(track.TrackType);
+                }
+                Console.WriteLine("Next Track");
+                Console.ReadLine();
+                Console.Clear();
             }
+
+
+           
         }
     }
 }

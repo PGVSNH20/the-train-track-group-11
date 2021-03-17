@@ -4,9 +4,19 @@ using System.Text;
 
 namespace TrainEngine
 {
-    class Station
+    public class Station
     {
-        public string name { set; get; }
+        public int Id { set; get; }
+        public string Name { set; get; }
+        public bool Endstation { set; get; }
+
+
+        public Station(int id, string name, bool endstation)
+        {
+            Id = id;
+            Name = name;
+            Endstation = Endstation;
+        }
 
 
     }
