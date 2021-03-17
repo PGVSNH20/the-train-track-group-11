@@ -6,9 +6,9 @@ namespace TrainEngine.FileReaders
 {
     public class StationReader
     {
-        List<Station> StationList = new List<Station>();
+        List<Object> StationList = new List<Object>();
         
-        public List<Station> Load(string url)
+        public List<Object> Load(string url)
         {
             
             String input = System.IO.File.ReadAllText(url);

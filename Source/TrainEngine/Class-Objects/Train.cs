@@ -8,13 +8,15 @@ namespace TrainEngine
     {
         int Id;
         String Name;
+        int MaxSpeed;
         bool EndStation;
         int MaxSpeed;
         
-        public Train(int id, String name, bool endStation)
+        public Train(int id, String name, int max, bool endStation)
         {
             Id = id;
             Name = name;
+            MaxSpeed = max;
             EndStation = endStation;
         
         }
