@@ -20,11 +20,12 @@ namespace TrainEngine.FileReaders
             for (int x = 1; x < TrainRows.Length; x++)
             {
                 String[] col = TrainRows[x].Split(",");
-                TrainList.Add(new Train(Int32.Parse(col[0]), col[1], (col[2].ToLower() == "true") ? true : false));
+                TrainList.Add(new Train(Int32.Parse(col[0]), col[1], Int32.Parse(col[2]),(col[3].ToLower() == "true") ? true : false));
                 //TrainList.Add(new Train(Int32.Parse(col[0]), col[1], Convert.ToBoolean(col[2]));
 
-                return TrainList;
+                
             }
+            return TrainList;
 
         }
 

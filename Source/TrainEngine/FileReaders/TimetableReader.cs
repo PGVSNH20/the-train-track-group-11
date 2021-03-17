@@ -6,7 +6,7 @@ using TrainEngine.Interfaces;
 
 namespace TrainEngine.FileReaders
 {
-    class TimetableReader : IFileReader
+    public class TimetableReader : IFileReader
     {
         
         public List<object> Load(string url)
