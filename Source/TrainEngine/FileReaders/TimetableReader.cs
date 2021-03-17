@@ -23,9 +23,12 @@ namespace TrainEngine.FileReaders
 
             for (int i = 1; i < dataArray.Length; i++)
             {
-                
+                DateTime arrival = new DateTime();
+                DateTime departure = new DateTime();
                 string[] StationData = dataArray[i].Split(",");
-                ListOfTime.Add(new TimeTableEntry(Convert.ToInt32(StationData[0]), Convert.ToInt32(StationData[1]), Convert.ToDateTime(StationData[2]), Convert.ToDateTime(StationData[3])));
+                DateTime.TryParse(StationData[2], out arrival);
+                DateTime.TryParse(StationData[3], out departure);
+                ListOfTime.Add(new TimeTableEntry(Convert.ToInt32(StationData[0]), Convert.ToInt32(StationData[1]), arrival, departure));
             }
             
             
