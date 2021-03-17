@@ -10,7 +10,10 @@ namespace TrainEngine
         public string Name { set; get; }
         public bool Endstation { set; get; }
 
-
+        public static Station StationFromObject(object ob)
+        {
+            return (Station)ob;
+        }
         public Station(int id, string name, bool endstation)
         {
             Id = id;
