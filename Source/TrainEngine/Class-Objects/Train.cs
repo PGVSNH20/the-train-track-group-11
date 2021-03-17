@@ -7,7 +7,7 @@ namespace TrainEngine
     public class Train
     {
         int Id;
-        String Name;
+        public string Name { get; }
         int MaxSpeed;
         bool EndStation;
         

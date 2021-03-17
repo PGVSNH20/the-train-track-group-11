@@ -5,6 +5,7 @@ using TrainEngine;
 using TrainEngine.Class_Objects;
 using TrainEngine.FileReaders;
 using TrainEngine.FileWriters;
+using TrainEngine.Simulation;
 
 namespace TrainConsole
 {
@@ -12,7 +13,12 @@ namespace TrainConsole
     {
         static void Main(string[] args)
         {
-            
+
+            TrainSimulator mySim = new TrainSimulator()
+                                        .GetTrain()
+                                        .GetTrack()
+                                        .RunSimulation();
+            /*
             //PassengerReader pr = new PassengerReader();
             //List<Object> passengers = pr.Load(@"C:\Users\Robert\Source\Repos\the-train-track-group-11\Data\passengers.txt");
 
@@ -49,6 +55,7 @@ namespace TrainConsole
             {
                 Console.WriteLine(track.TrackType);
             }
+            */
         }
     }
 }
