@@ -8,10 +8,12 @@ namespace TrainEngine.FileReaders
 {
     public class PassengerReader : IFileReader
     {
-        List<object> listOfPassengers { get; set; }
+        
 
         public List<object> Load(string url)
         {
+            List<object> listOfPassengers;
+            
             string inputData = new StreamReader(
                             File.Open(url, FileMode.Open)
                                             ).ReadToEnd();

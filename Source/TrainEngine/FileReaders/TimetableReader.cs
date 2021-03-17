@@ -6,23 +6,29 @@ using TrainEngine.Interfaces;
 
 namespace TrainEngine.FileReaders
 {
-    class TimetableReader : IFileReader
+    public class TimetableReader : IFileReader
     {
         
         public List<object> Load(string url)
         {
             
+
+
             string inputData = new StreamReader(
                             File.Open(url, FileMode.Open)
                                             ).ReadToEnd();
 
             string[] dataArray = inputData.Split("\n");
             var ListOfTime = new List<object>();
-            foreach (string entry in dataArray)
+
+            for (int i = 1; i < dataArray.Length; i++)
             {
-                string[] StationData = entry.Split(",");
-                ListOfTime.Add(new TimeTableEntry(Convert.ToInt32(entry[0]), Convert.ToInt32(entry[1]), Convert.ToDateTime(entry[2]), Convert.ToDateTime(entry[3])));
+                
+                string[] StationData = dataArray[i].Split(",");
+                ListOfTime.Add(new TimeTableEntry(Convert.ToInt32(StationData[0]), Convert.ToInt32(StationData[1]), Convert.ToDateTime(StationData[2]), Convert.ToDateTime(StationData[3])));
             }
+            
+            
             return ListOfTime;
         }
     }

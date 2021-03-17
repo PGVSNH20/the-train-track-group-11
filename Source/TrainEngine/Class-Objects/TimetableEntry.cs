@@ -8,10 +8,10 @@ namespace TrainEngine
     public class TimeTableEntry
     {
 
-        int TrainId { get; set; }
-        int StationId { get; set; }
-        DateTime Arrival { get; set; }
-        DateTime Departure { get; set; }
+        public int TrainId { get; set; }
+        public int StationId { get; set; }
+        public DateTime Arrival { get; set; }
+        public DateTime Departure { get; set; }
 
         public TimeTableEntry(int id, int sid, DateTime arrival, DateTime departure)
         {
@@ -20,5 +20,6 @@ namespace TrainEngine
             Arrival = arrival;
             Departure = departure;
         }
+
     }
 }
