@@ -31,18 +31,12 @@ namespace TrainConsole
             List<Station> stationList = new StationReader().Load(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\stations.txt");
             stationList.ForEach(s => Console.WriteLine(s.Name));
             */ 
-            List<object> listOfTrackLists = new TraintrackReader().Load(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\traintrack3.txt");
+            List<object> listOfTrackSegments = new TraintrackReader2().Load(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\traintrack2.txt");
 
-            foreach (List<TrackSegment> tl in listOfTrackLists)
-            {
-                foreach (TrackSegment track in tl)
+                foreach (TrackSegment track in listOfTrackSegments)
                 {
                     Console.WriteLine(track.TrackType);
                 }
-                Console.WriteLine("Next Track");
-                Console.ReadLine();
-                Console.Clear();
-            }
 
 
            
