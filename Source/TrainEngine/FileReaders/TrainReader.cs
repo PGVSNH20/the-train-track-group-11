@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using TrainEngine.Interfaces;
 
 namespace TrainEngine.FileReaders
 {
-    public class TrainReader
+    public class TrainReader : IFileReader
     {
-        public List<Train> TrainList = new List<Train>();
+        
 
-
-        public TrainReader(String url)
+        public List<object> Load(string url)
         {
+            List<object> TrainList = new List<object>();
 
             String TrainInput = System.IO.File.ReadAllText(url);
 
@@ -22,20 +23,11 @@ namespace TrainEngine.FileReaders
                 TrainList.Add(new Train(Int32.Parse(col[0]), col[1], (col[2].ToLower() == "true") ? true : false));
                 //TrainList.Add(new Train(Int32.Parse(col[0]), col[1], Convert.ToBoolean(col[2]));
 
+                return TrainList;
             }
 
         }
 
-        public List<Train> PrintList()
-        {
-            foreach(var x in TrainList)
-            {
-                Console.WriteLine(x.PrintTrain());
-            }
-            return TrainList;
-        }
-
-
-
+        
     }
 }

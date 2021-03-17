@@ -4,6 +4,6 @@ namespace TrainEngine.Interfaces
 {
     interface IFileReader
     {
-        List<object> Load(string url);
+        public List<object> Load(string url);
     }
 }
