@@ -4,6 +4,7 @@ using System.IO;
 using TrainEngine;
 using TrainEngine.Class_Objects;
 using TrainEngine.FileReaders;
+using TrainEngine.FileWriters;
 
 namespace TrainConsole
 {
@@ -31,12 +32,18 @@ namespace TrainConsole
 
             foreach(TimeTableEntry x in timetable)
             {
-                Console.WriteLine(x.TrainId) ;
+                Console.WriteLine(x.TrainId);
+                Console.WriteLine(x.StationId);
+                Console.WriteLine(x.Arrival);
+                Console.WriteLine(x.Departure);
+                Console.WriteLine();
             }
 
             List<object> stationList = new StationReader().Load(@$"{Directory.GetCurrentDirectory()}\Data\stations.txt");
             stationList.ForEach(s => Console.WriteLine(Station.StationFromObject(s).Name));
             List<object> listOfTrackSegments = new TraintrackReader2().Load(@$"{Directory.GetCurrentDirectory()}\Data\traintrack2.txt");
+            TraintrackWriter ttW = new TraintrackWriter();
+            ttW.Save(@"C:\plushogskolan\Dataåtkomster i .NET\The Train Track\Source\TrainEngine\Data\traintrack2-2.txt", listOfTrackSegments);
 
             foreach (TrackSegment track in listOfTrackSegments)
             {

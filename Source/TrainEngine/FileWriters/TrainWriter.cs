@@ -7,9 +7,8 @@ namespace TrainEngine.FileWriters
 {
     public class TrainWriter : IFileWriter
     {
-        public void Save(string url)
+        public void Save(string url, List<object> list)
         {
-            // ID,Name,MaxSpeed,Operated
             throw new NotImplementedException();
         }
     }

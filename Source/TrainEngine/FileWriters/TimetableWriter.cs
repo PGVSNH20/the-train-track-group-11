@@ -7,7 +7,7 @@ namespace TrainEngine.FileWriters
 {
     public class TimetableWriter : IFileWriter
     {
-        public void Save(string url)
+        public void Save(string url, List<object> list)
         {
             throw new NotImplementedException();
         }
