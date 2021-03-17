@@ -6,8 +6,8 @@ namespace TrainEngine
 {
     public class Train
     {
-        int Id;
-        String Name;
+        public int Id;
+        public String Name;
         int MaxSpeed;
         bool EndStation;
         
