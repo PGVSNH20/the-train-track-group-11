@@ -9,6 +9,7 @@ namespace TrainEngine
         int Id;
         String Name;
         bool EndStation;
+        int MaxSpeed;
         
         public Train(int id, String name, bool endStation)
         {
